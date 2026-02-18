@@ -1,0 +1,13 @@
+[
+    {
+        "id": "MUSE-001",
+        "title": "Mona Lisa",
+        "artist": "Leonardo da Vinci",
+        "year": 1503,
+        "dimensions": {
+            "h": 150.0,
+            "w": 100.0,
+            "d": 10.0
+        }
+    }
+]

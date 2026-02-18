@@ -1,3 +1,17 @@
-.venv/
-node_modules/
+# Python
 __pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# VS Code
+.vscode/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Project specific
+exhibits.jsonnode_modules/
