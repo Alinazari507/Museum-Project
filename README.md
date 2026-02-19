@@ -1,15 +1,22 @@
-# Museum Exhibit Management System 🏛️
-
-A Python-based system to manage museum exhibits using Domain-Driven Design (DDD) principles like **Entities** and **Value Objects**.
+echo "# Museum Exhibit Management System
+This is a Python-based project for managing museum exhibits using JSON storage.
 
 ## Features
-* **Validation:** Automatic checks for physical dimensions (no negative values).
-* **Smart Tracking:** Year of creation cannot be in the future.
-* **Equality Checks:** Value Objects compared by data, Entities compared by unique ID.
+* **CRUD Operations:** Create, Read, Update, and Delete exhibits.
+* **Validation:** Ensures data integrity for years and descriptions.
+* **Unit Testing:** Verified with Python's unittest framework.
 
-## How to Use
-To create a new exhibit, first define its dimensions:
+## Project Structure
+* \`LF5_3_6.py\`: Core application logic.
+* \`museum.json\`: Data storage.
+* \`test_exhibit.py\`: Automated tests.
+* \`Lessons_Archive/\`: Historical learning materials and configurations.
 
-```python
-dims = Dimensions(100, 80, 10)
-exhibit = Exhibit("ART-001", "The Night Watch", "Rembrandt", 1642, dims)
+## How to Run Tests
+\`\`\`bash
+python3 test_exhibit.py
+\`\`\` " > README.md
+
+git add README.md
+git commit -m "Update README with professional project description"
+git push origin master

@@ -6,6 +6,10 @@ __pycache__/
 venv/
 ENV/
 
+# TypeScript / Node
+node_modules/
+*.js               
+
 # VS Code
 .vscode/
 
@@ -14,4 +18,4 @@ ENV/
 Thumbs.db
 
 # Project specific
-exhibits.jsonnode_modules/
+exhibits.json

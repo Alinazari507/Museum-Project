@@ -1,11 +1,12 @@
 import json
 from datetime import datetime
 
-# --- Domain Layer ---
+# --- 1. Domain Layer (The Core Logic) ---
 
 class Dimensions:
-    """Handles physical dimensions with validation."""
-    def __init__(self, height_cm, width_cm, depth_cm):
+    """Value Object: Defined only by its attributes (immutable logic)."""
+    def __init__(self, height_cm: float, width_cm: float, depth_cm: float):
+        # Validation is handled by setters
         self.height_cm = height_cm
         self.width_cm = width_cm
         self.depth_cm = depth_cm
@@ -31,13 +32,17 @@ class Dimensions:
         if value <= 0: raise ValueError("Depth must be positive.")
         self._depth_cm = value
 
+    def __str__(self):
+        return f"{self.height_cm}x{self.width_cm}x{self.depth_cm} cm"
+
+
 class Exhibit:
-    """Manages museum exhibits including ID, title, artist, year, dimensions, and description."""
-    def __init__(self, exhibit_id, title, artist, year, dimensions: Dimensions, description=""):
+    """Entity: Has a unique identity (exhibit_id)."""
+    def __init__(self, exhibit_id: str, title: str, artist: str, year: int, dimensions: Dimensions, description=""):
         self.exhibit_id = exhibit_id
         self.title = title
         self.artist = artist
-        self.year = year  # Triggers setter validation
+        self.year = year  # Triggers validation
         self.dimensions = dimensions
         self.description = description
 
@@ -51,7 +56,7 @@ class Exhibit:
         self._year = value
 
     def to_dict(self):
-        """Converts exhibit data to a dictionary for JSON storage."""
+        """Prepares data for JSON serialization."""
         return {
             "exhibit_id": self.exhibit_id,
             "title": self.title,
@@ -65,55 +70,48 @@ class Exhibit:
             }
         }
 
-# --- Infrastructure Layer ---
+# --- 2. Infrastructure Layer (Data Persistence) ---
 
 def save_exhibits_to_json(exhibit_list, filename="museum.json"):
-    """Saves a list of exhibit objects to a JSON file."""
+    """Converts objects to dicts and saves to a file."""
     try:
         data = [exhibit.to_dict() for exhibit in exhibit_list]
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
-        print(f"✅ Success: Saved {len(exhibit_list)} items to {filename}")
+        print(f"✅ Data saved successfully to {filename}")
     except Exception as e:
-        print(f"❌ Error: Could not save data: {e}")
+        print(f"❌ Storage Error: {e}")
 
 def find_exhibit_by_artist(filename, artist_name):
-    """Searches for exhibits by artist name in the JSON database."""
+    """Business Logic: Search filter for the collection."""
     try:
         with open(filename, "r", encoding="utf-8") as f:
             all_data = json.load(f)
-        results = [e for e in all_data if artist_name.lower() in e['artist'].lower()]
-        return results
+        return [e for e in all_data if artist_name.lower() in e['artist'].lower()]
     except FileNotFoundError:
+        print("⚠️ Database file not found.")
         return []
 
-# --- Main Application Logic ---
+# --- 3. Execution (Testing the Story) ---
 
 if __name__ == "__main__":
     try:
-        # 1. Initialize Dimensions
-        dims1 = Dimensions(120, 90, 5)
-        dims2 = Dimensions(200, 100, 100)
+        # Create Objects
+        d1 = Dimensions(120, 90, 5)
+        exhibit1 = Exhibit("ART-001", "Starry Night", "Van Gogh", 1889, d1, "Oil painting")
 
-        # 2. Initialize Exhibits (with descriptions)
-        exhibit1 = Exhibit(
-            "ART-001", "Starry Night", "Van Gogh", 1889, dims1, 
-            "Famous oil-on-canvas painting showing a night view."
-        )
-        exhibit2 = Exhibit(
-            "ART-002", "David", "Michelangelo", 1504, dims2, 
-            "A masterpiece of Renaissance sculpture created in marble."
-        )
+        d2 = Dimensions(200, 100, 100)
+        exhibit2 = Exhibit("ART-002", "David", "Michelangelo", 1504, d2, "Marble sculpture")
 
-        # 3. Storage
-        museum_collection = [exhibit1, exhibit2]
-        save_exhibits_to_json(museum_collection)
+        # Save to JSON
+        my_collection = [exhibit1, exhibit2]
+        save_exhibits_to_json(my_collection)
 
-        # 4. Search Verification
-        print("\n🔎 Searching for 'Michelangelo':")
-        results = find_exhibit_by_artist("museum.json", "Michelangelo")
-        for item in results:
-            print(f"ID: {item['exhibit_id']} | Title: {item['title']} | Info: {item['description']}")
+        # Search and Display
+        print("\n🔎 Searching for 'Van Gogh'...")
+        search_results = find_exhibit_by_artist("museum.json", "Van Gogh")
+        for item in search_results:
+            print(f"Found: {item['title']} ({item['year']}) - ID: {item['exhibit_id']}")
 
     except ValueError as e:
-        print(f"⚠️ Data Error: {e}")
+        print(f"⚠️ Validation Error: {e}")
