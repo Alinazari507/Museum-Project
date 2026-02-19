@@ -1,5 +1,7 @@
 class Dimensions:
     def __init__(self, height_cm: float, width_cm: float, depth_cm: float):
+        if height_cm <= 0 or width_cm <= 0 or depth_cm <= 0:
+            raise ValueError("Dimensions must be positive values")
         self.height_cm = height_cm
         self.width_cm = width_cm
         self.depth_cm = depth_cm

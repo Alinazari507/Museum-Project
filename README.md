@@ -1,22 +1,21 @@
-echo "# Museum Exhibit Management System
-This is a Python-based project for managing museum exhibits using JSON storage.
+# 🏛️ Neustadt Museum Management System
 
-## Features
-* **CRUD Operations:** Create, Read, Update, and Delete exhibits.
-* **Validation:** Ensures data integrity for years and descriptions.
-* **Unit Testing:** Verified with Python's unittest framework.
+A professional Python-based museum management system implementing Clean Architecture and Functional Programming patterns.
 
-## Project Structure
-* \`LF5_3_6.py\`: Core application logic.
-* \`museum.json\`: Data storage.
-* \`test_exhibit.py\`: Automated tests.
-* \`Lessons_Archive/\`: Historical learning materials and configurations.
+## 🚀 Key Features
+- **Repository Pattern:** Decouples domain logic from JSON storage.
+- **Advanced Query Engine:** Uses lambda functions and filters for real-time data retrieval.
+- **Data Analytics:** Implements `map` and `reduce` to calculate museum statistics (e.g., average exhibit age).
+- **OOP Excellence:** Uses Entities (Exhibit) and Value Objects (Dimensions) for robust modeling.
 
-## How to Run Tests
-\`\`\`bash
-python3 test_exhibit.py
-\`\`\` " > README.md
+## 🛠️ Project Structure
+- `LF5_3_models.py`: Domain entities and core logic.
+- `LF5_3_repository.py`: Data access layer and functional aggregators.
+- `LF5_3_main.py`: Application orchestrator and user interaction.
+- `exhibits.json`: Persistent data storage.
 
-git add README.md
-git commit -m "Update README with professional project description"
-git push origin master
+## 💻 How to Run
+1. Ensure you have Python 3.x installed.
+2. Run the main script:
+   ```bash
+   python LF5_3_main.py
